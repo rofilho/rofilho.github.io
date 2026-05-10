@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portal acadêmico do Prof. Romualdo Mathias Filho — Uniube Uberlândia. Acesse os materiais das disciplinas de 2026/1." />
+  <title>Prof. Romualdo Mathias Filho — Uniube</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --blue-900: #0a1628;
+      --blue-800: #0f2240;
+      --blue-700: #1a3a6b;
+      --blue-600: #004b87;
+      --blue-400: #3b82f6;
+      --blue-300: #60a5fa;
+      --orange:   #f97316;
+      --orange-d: #ea6c0a;
+      --text:     #e2e8f0;
+      --text-muted: #94a3b8;
+      --surface:  #111827;
+      --card:     #1a2537;
+      --card-border: rgba(59,130,246,0.15);
+      --card-hover: rgba(59,130,246,0.25);
+      --radius: 16px;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--blue-900);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Background grid ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 3.5rem 0 2rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue-300);
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 0%, var(--blue-300) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .semester {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--orange);
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ── Section title ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(59,130,246,0.3) 0%, transparent 100%);
+    }
+
+    /* ── Card grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    /* ── Discipline card ── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.15);
+    }
+
+    .card-stripe {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-600), var(--blue-400));
+    }
+
+    .card:nth-child(2) .card-stripe { background: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .card:nth-child(3) .card-stripe { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+    .card:nth-child(4) .card-stripe { background: linear-gradient(90deg, #b45309, #f59e0b); }
+    .card:nth-child(5) .card-stripe { background: linear-gradient(90deg, #be123c, #fb7185); }
+
+    .card-inner {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+      line-height: 1;
+    }
+
+    .card-code {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.15);
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+    }
+
+    .card-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--blue-300);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.2s ease;
+    }
+
+    .card:hover .card-link {
+      gap: 0.6rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 0 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: var(--blue-300);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      header { padding: 2.5rem 0 1.5rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <header>
+      <div class="badge">
+        <span>🎓</span> Uniube Uberlândia
+      </div>
+      <h1>Prof. Romualdo Mathias Filho</h1>
+      <p class="subtitle">Ciência da Computação &amp; Inteligência Artificial — materiais das disciplinas</p>
+      <span class="semester">📅 Semestre 2026/1</span>
+    </header>
+
+    <div class="section-header">
+      <h2>Disciplinas Ativas</h2>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="https://rofilho.github.io/cloud" target="_blank" rel="noopener">
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <span class="card-icon">☁️</span>
+          <div class="card-code">Cód. 14189 · IA e Ciência de Dados</div>
+          <div class="card-title">Cloud Computing</div>
+          <p class="card-desc">Fundamentos e práticas de computação em nuvem com AWS Academy. IaaS, PaaS, SaaS, IAM, S3, EC2 e arquitetura global.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">Quarta-feira</span>
+          <span class="card-link">Acessar portal <span>→</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="https://rofilho.github.io/redes1" target="_blank" rel="noopener">
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <span class="card-icon">🌐</span>
+          <div class="card-code">Computação · Presencial</div>
+          <div class="card-title">Redes de Computadores I</div>
+          <p class="card-desc">OSI, TCP/IP, endereçamento IPv4/IPv6, roteamento estático e configuração de redes no Cisco Packet Tracer.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">Domingo</span>
+          <span class="card-link">Acessar portal <span>→</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="https://rofilho.github.io/arquitetura" target="_blank" rel="noopener">
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <span class="card-icon">💻</span>
+          <div class="card-code">Computação · Presencial</div>
+          <div class="card-title">Arquitetura de Computadores</div>
+          <p class="card-desc">Organização e funcionamento de sistemas computacionais: CPU, memória, baramentos, assembly e pipeline de instruções.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">Presencial</span>
+          <span class="card-link">Acessar portal <span>→</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="https://rofilho.github.io/admin-so1" target="_blank" rel="noopener">
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <span class="card-icon">🖥️</span>
+          <div class="card-code">Computação · Presencial</div>
+          <div class="card-title">Admin. de Sistemas Operacionais I</div>
+          <p class="card-desc">Administração de sistemas Linux e Windows Server, gerência de usuários, permissões, serviços e automatização com shell.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">Laboratório</span>
+          <span class="card-link">Acessar portal <span>→</span></span>
+        </div>
+      </a>
+
+      <a class="card" href="https://rofilho.github.io/projetos2" target="_blank" rel="noopener">
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <span class="card-icon">🚀</span>
+          <div class="card-code">VIA231 · Presencial</div>
+          <div class="card-title">Projetos Integrados 2</div>
+          <p class="card-desc">Desenvolvimento de MVPs em equipe com metodologia PBL. Backend, frontend, banco de dados e hospedagem em nuvem.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-tag">Quinta-feira</span>
+          <span class="card-link">Acessar portal <span>→</span></span>
+        </div>
+      </a>
+
+    </div>
+
+    <footer>
+      <p>
+        <strong>Romualdo Mathias Filho</strong> ·
+        <a href="mailto:horizontetech80@gmail.com">horizontetech80@gmail.com</a> ·
+        <a href="https://gitlab.com/uniube-pi2-2026-1" target="_blank" rel="noopener">GitLab Projetos</a>
+      </p>
+      <p style="margin-top:0.5rem; color: #475569;">Uniube — Universidade de Uberaba, Campus Uberlândia · 2026</p>
+    </footer>
+
+  </div>
+</body>
+</html>
